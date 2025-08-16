@@ -2,20 +2,25 @@ package tests;
 
 import io.restassured.response.Response;
 import models.request.LoginRequest;
+import models.request.ProductRequest;
 import models.response.LoginResponse;
+import models.response.ProductResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import services.base.AuthService;
+import services.AuthService;
+import services.ProductService;
 import utils.ConfigReader;
+import utils.ProductRequestGenerator;
+
 
 @Listeners(listeners.TestListeners.class)
 public class EndToEndTest {
 
 
-private final Logger logger= LogManager.getLogger(EndToEndTest.class);
+    private final Logger logger = LogManager.getLogger(EndToEndTest.class);
     private AuthService authService;
     private String authToken;
 
@@ -35,8 +40,27 @@ private final Logger logger= LogManager.getLogger(EndToEndTest.class);
         logger.info("Login successful, token: " + authToken);
         logger.info(logresponse);
         Assert.assertNotNull(authToken);
-        Assert.assertEquals(logresponse.getUsername(),username, "Username does not match expected value.");
+        Assert.assertEquals(logresponse.getUsername(), username, "Username does not match expected value.");
 
+    }
+
+    @Test
+    public void testCreateProduct() {
+        ProductService productService = new ProductService();
+        ProductRequestGenerator productRequestGenerator = new ProductRequestGenerator();
+
+       ProductRequest generatedProductRequest = productRequestGenerator.generateProductRequest();
+
+        Response response = productService.createProduct(generatedProductRequest);
+        response.then().statusCode(201);
+        ProductResponse productResponse = response.as(ProductResponse.class);
+
+        Assert.assertNotNull(productResponse,"Product response should not be null.");
+        Assert.assertEquals(productResponse.getTitle(), generatedProductRequest.getTitle(),
+                "Product title does not match expected value.");
+       Assert.assertTrue(productResponse.getId() > 0,"Product ID should be generated");
+        logger.info("Product created successfully with ID: " + productResponse.getId());
+        logger.info("Product response: " + productResponse);
 
     }
 }
