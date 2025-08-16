@@ -1,7 +1,8 @@
-package services.base;
+package services;
 
 import io.restassured.response.Response;
 import models.request.LoginRequest;
+import services.base.BaseService;
 
 import static io.restassured.RestAssured.given;
 
