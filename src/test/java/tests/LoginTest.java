@@ -7,7 +7,7 @@ import models.response.LoginResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.Test;
-import services.base.AuthService;
+import services.AuthService;
 import utils.LoginDataProvider;
 
 import static org.hamcrest.Matchers.equalTo;
