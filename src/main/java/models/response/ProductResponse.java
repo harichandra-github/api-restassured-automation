@@ -17,5 +17,7 @@ public class ProductResponse {
     private String description;
     private String brand;
     private String category;
+    private double discountPercentage;
+    private double rating;
 
 }
