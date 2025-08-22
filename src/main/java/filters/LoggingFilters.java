@@ -4,6 +4,7 @@ import io.restassured.filter.FilterContext;
 import io.restassured.response.Response;
 import io.restassured.specification.FilterableRequestSpecification;
 import io.restassured.specification.FilterableResponseSpecification;
+import listeners.TestListeners;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -57,6 +58,7 @@ public class LoggingFilters implements Filter{
 
         sb.append("======================================================");
         logger.info(sb.toString());
+        TestListeners.info("<pre>" + sb.toString() + "</pre>");
     }
 
     /**
@@ -89,6 +91,7 @@ public class LoggingFilters implements Filter{
 
         sb.append("======================================================");
         logger.info(sb.toString());
+        TestListeners.info("<pre>" + sb.toString() + "</pre>");
     }
 }
 
