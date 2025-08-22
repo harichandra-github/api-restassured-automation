@@ -8,7 +8,8 @@ A robust and scalable API testing framework built with REST Assured, TestNG, and
 - **Authentication Support**: Built-in login functionality with token management
 - **Data-Driven Testing**: TestNG data providers for parameterized testing
 - **Comprehensive Logging**: Log4j2 integration for detailed request/response logging
-- **Test Listeners**: Custom test listeners for enhanced reporting
+- **Advanced Reporting**: Extent Reports integration for beautiful HTML test reports
+- **Test Listeners**: Custom test listeners for enhanced reporting and logging
 - **Request/Response Filtering**: Custom filters for logging and debugging
 - **Fake Data Generation**: Java Faker integration for realistic test data
 - **Configuration Management**: Externalized configuration properties
@@ -26,6 +27,7 @@ A robust and scalable API testing framework built with REST Assured, TestNG, and
 - **REST Assured 5.5.5**: API testing library
 - **TestNG 7.11.0**: Testing framework
 - **Log4j2 2.24.3**: Logging framework
+- **Extent Reports 5.1.2**: Advanced HTML test reporting
 - **Lombok 1.18.32**: Reduces boilerplate code
 - **Jackson 2.19.2**: JSON serialization/deserialization
 - **Java Faker 1.0.2**: Test data generation
@@ -47,12 +49,15 @@ restassured-api-automation/
 │   │   │   └── response/
 │   │   │       ├── LoginResponse.java       # Login response POJO
 │   │   │       └── ProductResponse.java     # Product response POJO
+│   │   ├── reporting/
+│   │   │   └── ExtentReportManager.java     # Extent Reports configuration
 │   │   ├── services/
 │   │   │   ├── base/
 │   │   │   │   └── BaseService.java         # Base service with common configuration
 │   │   │   ├── AuthService.java             # Authentication service
 │   │   │   └── ProductService.java          # Product CRUD operations
 │   │   └── utils/
+│   │       ├── CommonFunctions.java         # Common utility functions
 │   │       ├── ConfigReader.java            # Configuration property reader
 │   │       ├── LoginDataProvider.java       # Test data provider for login
 │   │       └── ProductRequestGenerator.java # Fake data generator
@@ -67,8 +72,9 @@ restassured-api-automation/
 │           └── log4j2.xml                   # Logging configuration
 ├── logs/
 │   └── app.log                              # Application logs
+├── reports/                                 # Extent Reports output directory
 ├── pom.xml                                  # Maven dependencies
-└── README.md                                # This file
+└── README.md                                # Readme file
 ```
 
 ## ⚙ Configuration
@@ -153,11 +159,17 @@ The `BaseService` class provides common configuration for all API requests:
 - **Request/Response Logging**: Detailed logging of all API interactions
 - **Test Execution Logging**: Comprehensive test execution tracking
 
+### Reporting
+- **ExtentReportManager**: Manages Extent Reports configuration and instance
+- **CommonFunctions**: Utility functions for timestamp generation and configuration loading
+- **Test Listeners**: Integrates with Extent Reports for automatic test reporting
+
 ### Test Listeners
 Custom test listeners provide:
 - Test execution start/finish notifications
 - Success/failure logging
 - Performance metrics
+- Extent Reports integration for detailed test reporting
 
 ##  Important Notes
 
@@ -174,7 +186,13 @@ Custom test listeners provide:
 Test execution generates:
 - Console output with detailed logs
 - Log files in the `logs/` directory
-- TestNG HTML reports (if configured)
+- **Extent Reports**: Beautiful HTML reports with detailed test information
+  - Interactive dashboard with test statistics
+  - Detailed test execution logs with request/response data
+  - Timeline view of test execution
+  - System information and environment details
+  - Searchable test results
+- TestNG HTML reports 
 
 
 ##  Author
@@ -189,6 +207,7 @@ Test execution generates:
 
 - [REST Assured](https://rest-assured.io/) for excellent API testing capabilities
 - [TestNG](https://testng.org/) for robust testing framework
+- [Extent Reports](https://extentreports.com/) for beautiful HTML test reporting
 - [Java Faker](https://github.com/DiUS/java-faker) for realistic test data generation
 - [DummyJSON](https://dummyjson.com/) for providing a test API
 
