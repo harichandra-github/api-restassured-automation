@@ -2,6 +2,7 @@ package tests;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import listeners.TestListeners;
 import models.request.LoginRequest;
 import models.request.ProductRequest;
 import models.response.LoginResponse;
@@ -23,6 +24,7 @@ public class EndToEndTest {
     private AuthService authService;
     private String authToken;
 
+
     @Test(description = "Login and Verify an access token")
     public void loginTest() {
         authService = new AuthService();
@@ -36,7 +38,8 @@ public class EndToEndTest {
         LoginResponse logResponse = loginResponse.as(LoginResponse.class);
         authToken = logResponse.getAccessToken();
         logger.info("Login successful, token: " + authToken);
-        logger.info(logResponse);
+        TestListeners.pass("Login successful, token: " + authToken);
+        logger.info(logResponse.toString());
         Assert.assertNotNull(authToken);
         Assert.assertEquals(logResponse.getUsername(), username, "Username does not match expected value.");
     }
@@ -62,7 +65,7 @@ public class EndToEndTest {
                 "Product title does not match expected value.");
         Assert.assertTrue(productResponse.getId() > 0, "Product ID should be generated");
         logger.info("Product created successfully with ID: " + productResponse.getId());
-        logger.info("Product response: " + productResponse);
+        TestListeners.pass("Product created successfully with ID: " + productResponse.getId());
     }
 
 
@@ -81,7 +84,8 @@ public class EndToEndTest {
 
         Assert.assertNotNull(jsonPath, "Product response should not be null.");
         Assert.assertEquals(jsonPath.getInt("id"), 1, "Product ID does not match expected value.");
-        logger.info("Product read successfully: " + jsonPath);
+        logger.info("Product read successfully: " + jsonPath.get("id"));
+        TestListeners.pass("Product read successfully: " + jsonPath.get("id"));
     }
 
     // NOTE: This function is currently using hardcoded values to simulate the product update.
@@ -104,7 +108,9 @@ public class EndToEndTest {
         Assert.assertEquals(jsonPath.getInt("id"), 1, "Product ID does not match expected value.");
         Assert.assertEquals(jsonPath.getString("title"), updatedProductRequest.getTitle(),
                 "Updated product title does not match expected value.");
-        logger.info("Product updated successfully: " + jsonPath);
+        logger.info("Product updated successfully: " +updatedProductRequest);
+        TestListeners.pass("Product updated successfully: " + updatedProductRequest);
+
     }
 
     // NOTE: This function is currently using hardcoded values to simulate the product deletion.
@@ -127,6 +133,7 @@ public class EndToEndTest {
         Assert.assertNotNull(deletedOn, "Product deletion timestamp should not be null.");
 
         logger.info("Product deletion simulated: isDeleted = " + isDeleted + ", deletedOn = " + deletedOn);
+        TestListeners.pass("Product deletion simulated: isDeleted = " + isDeleted + ", deletedOn = " + deletedOn);
 
     }
 }
