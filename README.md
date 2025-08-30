@@ -77,7 +77,7 @@ restassured-api-automation/
 └── README.md                                # Readme file
 ```
 
-## ⚙ Configuration
+##  Configuration
 
 ### Environment Setup
 
@@ -98,7 +98,8 @@ restassured-api-automation/
    ```bash
    mvn clean install
    ```
-##  Execution Demo:https://vimeo.com/1112434757
+##  Execution Demo: [Watch the video on Vimeo](https://vimeo.com/1112434757)
+
 
 
 ##  Running Tests
